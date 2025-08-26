@@ -30,6 +30,8 @@ namespace _09_Calendario
 
             int dia = 1;
 
+            
+
             //Preenche a matriz com os dias do mês
             for (int semana = 0; semana < 6; semana++)
             {
@@ -53,6 +55,9 @@ namespace _09_Calendario
 
             Console.WriteLine("DOM\tSEG\tTER\tQUA\tQUI\tSEX\tSAB");
 
+            //int[] diasFeriados = { };
+            int[] diasFeriados = RetornaFeriados(mes, ano);
+
             //Impreesão do calendário
             for (int semana = 0; semana < 6; semana++)
             {
@@ -61,7 +66,11 @@ namespace _09_Calendario
 
                     if (calendario[semana, diaSemana] != 0)
                     {
+                        if(diasFeriados.Contains(calendario[semana, diaSemana]) || diaSemana == 0 )
+                            Console.ForegroundColor = ConsoleColor.Red;
+
                         Console.Write(calendario[semana, diaSemana].ToString("D2") + "\t");
+                        Console.ResetColor();  
                     }
                     else 
                     { 
@@ -73,8 +82,66 @@ namespace _09_Calendario
                 Console.WriteLine();
             }
 
+            Console.Write("\nFeriados: ");
+            for (int i = 0; i < diasFeriados.Length; i++)
+            {
+                if (diasFeriados[i] > 0)
+                {
+                    Console.Write($"{diasFeriados[i].ToString("D2")}\t");
+                }
+            }
             //Espera o usuário teclar qualquer tecla
             Console.ReadKey();
+
+            
+        }
+
+        public static int[] RetornaFeriados(int mes, int ano)
+        {
+            int[] feriados = new int[16];
+
+            int indice = 0;
+            //feriados[indice] = 11
+            //indice = indice + 1
+            //feriados[indice++] = 11;
+            //feriados[indice++] = 21;
+            if (mes == 1)
+            {
+                feriados[indice++] = 1;
+            }
+            else if (mes == 4)
+            {
+                feriados[indice] = 21;
+            }
+            else if (mes == 5)
+            {
+                feriados[indice++] = 1;
+            }
+            else if(mes == 7)
+            {
+                feriados[indice++] = 9;
+            }
+            else if (mes == 9)
+            {
+                feriados[indice++] = 7;
+            }
+            else if (mes == 10)
+            {
+                feriados[indice++] = 12;
+            }
+            else if (mes == 11)
+            {
+                feriados[indice++] = 2;
+                feriados[indice++] = 15;
+                feriados[indice++] = 20;
+
+            }
+            else if (mes == 12)
+            {
+                feriados[indice++] = 25;
+            }
+
+                return feriados;
         }
     }
 }
